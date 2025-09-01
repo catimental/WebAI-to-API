@@ -39,9 +39,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Add API key authentication middleware
-app.middleware("http")(verify_api_key)
-
 # Register the endpoint routers for WebAI-to-API
 app.include_router(gemini.router)
 app.include_router(chat.router)

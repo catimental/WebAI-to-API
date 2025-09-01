@@ -1,12 +1,13 @@
 # src/app/endpoints/chat.py
 import time
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from app.logger import logger
 from schemas.request import GeminiRequest, OpenAIChatRequest
 from app.services.gemini_client import get_gemini_client
 from app.services.session_manager import get_translate_session_manager
+from app.middleware.dependencies import verify_api_key_dependency
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(verify_api_key_dependency)])
 
 @router.post("/translate")
 async def translate_chat(request: GeminiRequest):

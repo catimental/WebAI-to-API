@@ -1,14 +1,15 @@
 # src/app/endpoints/gemini.py
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from app.logger import logger
 from schemas.request import GeminiRequest
 from app.services.gemini_client import get_gemini_client
 from app.services.session_manager import get_gemini_chat_manager
+from app.middleware.dependencies import verify_api_key_dependency
 
 from pathlib import Path
 from typing import Union, List, Optional
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(verify_api_key_dependency)])
 
 @router.post("/gemini")
 async def gemini_generate(request: GeminiRequest):
