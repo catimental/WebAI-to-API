@@ -25,6 +25,8 @@ def load_config(config_file: str = "config.conf") -> configparser.ConfigParser:
         config["Cookies"] = {}
     if "AI" not in config:
         config["AI"] = {"default_model_gemini": "gemini-2.0-flash"}
+    if "Secret" not in config:
+        config["Secret"] = {}
 
     # Save changes to the configuration file, also with UTF-8 encoding.
     try:
@@ -39,3 +41,8 @@ def load_config(config_file: str = "config.conf") -> configparser.ConfigParser:
 
 # Load configuration globally
 CONFIG = load_config()
+
+
+def get_allowed_key() -> str:
+    """Get the ALLOWED_KEY from config."""
+    return CONFIG.get("Secret", "ALLOWED_KEY", fallback=None)

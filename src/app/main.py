@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.services.gemini_client import get_gemini_client
 from app.services.session_manager import init_session_managers
 from app.logger import logger
+from app.middleware.auth import verify_api_key
 
 # Import endpoint routers
 from app.endpoints import gemini, chat
@@ -37,6 +38,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Add API key authentication middleware
+app.middleware("http")(verify_api_key)
 
 # Register the endpoint routers for WebAI-to-API
 app.include_router(gemini.router)
