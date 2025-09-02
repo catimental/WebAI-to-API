@@ -14,9 +14,13 @@ def verify_api_key_dependency(authorization: Optional[str] = Header(None)):
     
     # Check Authorization header (Bearer token)
     provided_key = None
+    print("Authorization Header:", authorization)  # Debug print
+
     if authorization and authorization.startswith("Bearer "):
         provided_key = authorization[7:]  # Remove "Bearer " prefix
-    
+
+    print("Provided Key:", provided_key)  # Debug print
+
     if not provided_key or provided_key != allowed_key:
         raise HTTPException(
             status_code=401,
